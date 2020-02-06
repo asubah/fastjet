@@ -1,0 +1,7 @@
+*
+
+!.gitignore
+!*.cc
+!*.hh
+!*.cu
+!*.cuh
