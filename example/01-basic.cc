@@ -48,7 +48,7 @@ using namespace std;
 
 /// an example program showing how to use fastjet
 int main(){
-  
+
   // read in input particles
   //----------------------------------------------------------
   vector<fastjet::PseudoJet> input_particles;

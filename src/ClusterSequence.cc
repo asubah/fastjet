@@ -36,6 +36,7 @@
 #include "fastjet/internal/LazyTiling9Alt.hh"
 #include "fastjet/internal/LazyTiling9.hh"
 #include "fastjet/internal/LazyTiling25.hh"
+#include "../plugins/GPUPlugin/fastjet/GPUPlugin.hh"
 #ifndef __FJCORE__
 #include "fastjet/internal/LazyTiling9SeparateGhosts.hh"
 #endif  // __FJCORE__
@@ -217,6 +218,11 @@ void ClusterSequence::_initialise_and_run (
 
 //----------------------------------------------------------------------
 void ClusterSequence::_initialise_and_run_no_decant () {
+
+#ifdef GPU
+  //cout << "GPU!\n";
+  gpuClustring();
+#else
 
   // set up the history entries for the initial particles (those
   // currently in _jets)
@@ -402,6 +408,8 @@ void ClusterSequence::_initialise_and_run_no_decant () {
     err << "Unrecognised value for strategy: "<<_strategy;
     throw Error(err.str());
   }
+
+#endif
 
 }
 
