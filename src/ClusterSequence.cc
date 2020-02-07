@@ -36,10 +36,12 @@
 #include "fastjet/internal/LazyTiling9Alt.hh"
 #include "fastjet/internal/LazyTiling9.hh"
 #include "fastjet/internal/LazyTiling25.hh"
-#include "../plugins/GPUPlugin/fastjet/GPUPlugin.hh"
 #ifndef __FJCORE__
 #include "fastjet/internal/LazyTiling9SeparateGhosts.hh"
 #endif  // __FJCORE__
+#ifdef GPU
+#include "fastjet/GPUPlugin.hh"
+#endif
 #include<iostream>
 #include<sstream>
 #include<fstream>
@@ -221,7 +223,7 @@ void ClusterSequence::_initialise_and_run_no_decant () {
 
 #ifdef GPU
   //cout << "GPU!\n";
-  gpuClustring();
+  GPUPlugin(*this);
 #else
 
   // set up the history entries for the initial particles (those
