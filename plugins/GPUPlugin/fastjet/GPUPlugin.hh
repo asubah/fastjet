@@ -1,18 +1,29 @@
-#ifndef cluster_hh
-#define cluster_hh
+#ifndef GPUPlugin_hh
+#define GPUPlugin_hh
 #include "fastjet/ClusterSequence.hh"
-// #include "fastjet/ClusterSequence.hh"
-#include<iostream>
+#include "fastjet/JetDefinition.hh"
+#include "../cuda/GPUPseudoJet.h"
 
+#include <vector>
 
-class GPUPlugin {
+FASTJET_BEGIN_NAMESPACE
+
+class GPUPlugin : public JetDefinition::Plugin{
 public:
-  GPUPlugin(fastjet::ClusterSequence & cs);
-  // void gpuClustring(fastjet::ClusterSequence & cs){
-  //   std::cout << "GPU!!!\n";
-  //   std::cout << cs.jets().size() << std::endl;
-  // }
+  GPUPlugin(double r, fastjet::JetAlgorithm a) : radius(r), algo(a) {}
 
+  virtual std::string description () const {return "GPU!"; }
+  virtual void run_clustering(ClusterSequence &) const;
+
+  std::vector<PseudoJet> getJets();
+  
+  virtual double R() const {return radius;}
+
+private:
+
+  double radius;
+  JetAlgorithm algo;
 };
 
-#endif  // cluster_hh
+FASTJET_END_NAMESPACE
+#endif  // GPUPlugin_hh
